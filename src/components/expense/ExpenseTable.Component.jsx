@@ -27,8 +27,10 @@ export default function ExpenseTableComponent({
       <td>
         <select name='users'>
           <option value='--select'>--select--</option>
-          {users.map((user) => (
-            <option value={user.fullname}>{user.firstName}</option>
+          {users.map((user, index) => (
+            <option key={index} value={user.fullname}>
+              {user.firstName}
+            </option>
           ))}
         </select>
       </td>

@@ -20,7 +20,6 @@ export default function ExpenseForm({ users, saveExpense }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
-    // ... submit to API or something
   }
 
   const categories = ['Food', 'Travel', 'Equipment']
@@ -29,23 +28,19 @@ export default function ExpenseForm({ users, saveExpense }) {
     <form onSubmit={handleSubmit}>
       <label htmlFor='users'>
         Users:
-        <select name='users' onChange={handleChange}>
-          <option value='--select'>--select--</option>
+        <select name='fullName' onChange={handleChange}>
+          <option value='--select--'>--select--</option>
           {users.map((user, index) => (
-            <option key={index} value={user.fullname}>
-              {user.firstName}
+            <option key={index} value={`${user.firstName} ${user.lastName}`}>
+              {`${user.firstName} ${user.lastName}`}
             </option>
           ))}
         </select>
       </label>
       <label htmlFor='cateogories-dropdown'>
         Categories:
-        <select
-          name='cateogories'
-          id='categories-dropdown'
-          onChange={handleChange}
-        >
-          <option value='--select'>--select--</option>
+        <select name='category' onChange={handleChange}>
+          <option value='--select--'>--select--</option>
           {categories.map((cat, index) => (
             <option key={index} value={cat}>
               {cat}
@@ -55,11 +50,11 @@ export default function ExpenseForm({ users, saveExpense }) {
       </label>
       <label htmlFor='description'>
         Description:
-        <input type='text' id='description' onChange={handleChange} />
+        <input type='text' name='description' onChange={handleChange} />
       </label>
       <label htmlFor='cost'>
         Cost:
-        <input type='text' id='cost' onChange={handleChange} />
+        <input type='text' name='cost' onChange={handleChange} />
       </label>
       <button>save</button>
     </form>
