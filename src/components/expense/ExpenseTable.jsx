@@ -6,6 +6,7 @@ export default function ExpenseTable({
   users,
   usersExpenses,
   createNewExpense,
+  deleteExpense,
 }) {
   const [expenses, setExpenses] = useState([])
 
@@ -19,11 +20,6 @@ export default function ExpenseTable({
       if (id === exp.id) return { ...updatedExpense }
       return updatedExpense
     })
-    setExpenses(updatedExpensesList)
-  }
-
-  const deleteExpense = (id) => {
-    const updatedExpensesList = expenses.filter((exp) => id !== exp.id)
     setExpenses(updatedExpensesList)
   }
 
@@ -43,14 +39,14 @@ export default function ExpenseTable({
         </thead>
         <tbody>
           {usersExpenses &&
-            usersExpenses.map((exp, index) => (
+            usersExpenses.map((expense, index) => (
               <Expense
                 key={index}
-                fullName={exp.fullName}
-                id={exp.id}
-                category={exp.category}
-                description={exp.description}
-                cost={exp.cost}
+                fullName={expense.fullName}
+                id={expense.id}
+                category={expense.category}
+                description={expense.description}
+                cost={expense.cost}
                 editExpense={editExpense}
                 deleteExpense={deleteExpense}
                 usersDropdownList={users}

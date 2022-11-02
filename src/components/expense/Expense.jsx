@@ -30,7 +30,6 @@ export default function Expense({
 
   const handleSave = () => {
     setIsEditing(false)
-    console.log(Object.values(updatedExpense))
     if (Object.values(updatedExpense).some((e) => e.length === 0))
       return alert('all fields must be filled out.')
     editExpense(id, updatedExpense)

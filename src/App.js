@@ -9,7 +9,10 @@ function App() {
   ]
   const expenseSchema = [
     {
-      user: userSchema,
+      user: {
+        firstName: 'john',
+        lastName: 'doe',
+      },
       category: 'Travel',
       description: 'some description',
       cost: '$300',
@@ -47,7 +50,10 @@ function App() {
     ])
   }
 
-  console.log(users)
+  const handleDeleteExpense = (id) => {
+    const updatedUserExpensesList = usersExpenses.filter((e) => e.id !== id)
+    setUsersExpenses(updatedUserExpensesList)
+  }
 
   return (
     <div className='App'>
@@ -63,6 +69,7 @@ function App() {
         users={users}
         usersExpenses={usersExpenses}
         createNewExpense={handleCreateNewExpense}
+        deleteExpense={handleDeleteExpense}
       />
     </div>
   )
