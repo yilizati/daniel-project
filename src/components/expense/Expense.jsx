@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Expense({
-  fullName,
+  user,
   category,
   description,
   cost,
@@ -12,7 +12,7 @@ export default function Expense({
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [updatedExpense, setUpdatedExpense] = useState({
-    fullName,
+    user,
     category,
     description,
     cost,
@@ -104,7 +104,7 @@ export default function Expense({
 
   const viewTemplate = (
     <tr>
-      <td>{fullName}</td>
+      <td>{`${user.firstName} ${user.lastName}`}</td>
       <td>{category}</td>
       <td>{description}</td>
       <td>{cost}</td>

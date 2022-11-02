@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Expense from './Expense'
 import ExpenseForm from './ExpenseForm'
 
@@ -7,25 +7,11 @@ export default function ExpenseTable({
   usersExpenses,
   createNewExpense,
   deleteExpense,
+  editExpense,
 }) {
-  const [expenses, setExpenses] = useState([])
-
-  const saveExpense = (newExpense) => {
-    // setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }])
-    createNewExpense(newExpense)
-  }
-
-  const editExpense = (id, updatedExpense) => {
-    const updatedExpensesList = expenses.map((exp) => {
-      if (id === exp.id) return { ...updatedExpense }
-      return updatedExpense
-    })
-    setExpenses(updatedExpensesList)
-  }
-
   return (
     <>
-      <ExpenseForm saveExpense={saveExpense} usersDropdownList={users} />
+      <ExpenseForm saveExpense={createNewExpense} usersDropdownList={users} />
       <table>
         <caption>Expense Table</caption>
         <thead>
@@ -42,7 +28,7 @@ export default function ExpenseTable({
             usersExpenses.map((expense, index) => (
               <Expense
                 key={index}
-                fullName={expense.fullName}
+                user={expense.user}
                 id={expense.id}
                 category={expense.category}
                 description={expense.description}

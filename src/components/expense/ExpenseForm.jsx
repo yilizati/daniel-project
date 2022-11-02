@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 
 export default function ExpenseForm({ usersDropdownList, saveExpense }) {
-  const initialFormData = Object.freeze({
-    fullName: '',
-    category: '',
-    description: '',
-    cost: '',
-  })
-  const [formData, updateFormData] = useState(initialFormData)
+  const [formData, updateFormData] = useState([])
 
   const categories = ['Food', 'Travel', 'Equipment']
 
