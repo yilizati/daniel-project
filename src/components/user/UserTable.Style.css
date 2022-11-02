@@ -1,0 +1,30 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(39, 37, 37);
+}
+
+button {
+  margin-right: 10px;
+}
+
+table {
+  margin: 10px;
+  text-align: left;
+  position: relative;
+  border-collapse: collapse;
+  background-color: #f6f6f6;
+}
+
+td,
+th {
+  border: 1px solid #999;
+  padding: 10px;
+}
+
+th {
+  background: whitesmoke;
+  border-radius: 0;
+  position: sticky;
+  top: 0;
+  padding: 10px;
+}
