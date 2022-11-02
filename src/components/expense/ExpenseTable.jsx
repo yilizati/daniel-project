@@ -9,6 +9,7 @@ export default function ExpenseTable({
   deleteExpense,
 }) {
   const [expenses, setExpenses] = useState(userExpenses)
+
   const saveExpense = (newExpense) => {
     console.log('NEW', newExpense)
     setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }])
@@ -26,6 +27,7 @@ export default function ExpenseTable({
             <th>Category</th>
             <th>Description</th>
             <th>Cost</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +41,7 @@ export default function ExpenseTable({
               cost={item.cost}
               editExpense={editExpense}
               deleteExpense={deleteExpense}
+              usersDropdownList={users}
             />
           ))}
         </tbody>
