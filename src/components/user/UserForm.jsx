@@ -1,22 +1,26 @@
 import React, { useState } from 'react'
 
 export default function UserForm({ saveUser }) {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const initialFormData = Object.freeze({
+    firstName: '',
+    lastName: '',
+  })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!firstName || !lastName) return
-    const newUser = { firstName, lastName }
-    saveUser(newUser)
-    setFirstName('')
-    setLastName('')
-  }
+  const [form, setForm] = useState(initialFormData)
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    if (name === 'firstname') setFirstName(value)
-    if (name === 'lastname') setLastName(value)
+    setForm({
+      ...form,
+      [name]: value.trim(),
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (Object.values(form).every((e) => e.length === 0)) return
+    saveUser(form)
+    setForm(initialFormData)
   }
 
   return (
@@ -25,18 +29,20 @@ export default function UserForm({ saveUser }) {
         Last name:
         <input
           type='text'
-          name='firstname'
+          name='firstName'
           onChange={handleChange}
-          value={firstName}
+          value={form.firstName}
+          required
         />
       </label>
       <label htmlFor='lastname'>
         First name:
         <input
           type='text'
-          name='lastname'
+          name='lastName'
           onChange={handleChange}
-          value={lastName}
+          value={form.lastName}
+          required
         />
       </label>
       <button>save</button>

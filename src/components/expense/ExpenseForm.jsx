@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function ExpenseForm({ users, saveExpense }) {
+export default function ExpenseForm({ usersDropdownList, saveExpense }) {
   const initialFormData = Object.freeze({
     fullName: '',
     category: '',
     description: '',
     cost: '',
   })
-  const [formData, updateFormData] = React.useState(initialFormData)
+  const [formData, updateFormData] = useState(initialFormData)
+
+  const categories = ['Food', 'Travel', 'Equipment']
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -19,18 +21,17 @@ export default function ExpenseForm({ users, saveExpense }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
+    if (Object.values(formData).every((e) => e.length !== 0))
+      saveExpense(formData)
   }
-
-  const categories = ['Food', 'Travel', 'Equipment']
 
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor='users'>
         Users:
-        <select name='fullName' onChange={handleChange}>
-          <option value='--select--'>--select--</option>
-          {users.map((user, index) => (
+        <select name='fullName' onChange={handleChange} required>
+          <option value=''>--select--</option>
+          {usersDropdownList.map((user, index) => (
             <option key={index} value={`${user.firstName} ${user.lastName}`}>
               {`${user.firstName} ${user.lastName}`}
             </option>
@@ -39,8 +40,8 @@ export default function ExpenseForm({ users, saveExpense }) {
       </label>
       <label htmlFor='cateogories-dropdown'>
         Categories:
-        <select name='category' onChange={handleChange}>
-          <option value='--select--'>--select--</option>
+        <select name='category' onChange={handleChange} required>
+          <option value=''>--select--</option>
           {categories.map((cat, index) => (
             <option key={index} value={cat}>
               {cat}
@@ -50,11 +51,16 @@ export default function ExpenseForm({ users, saveExpense }) {
       </label>
       <label htmlFor='description'>
         Description:
-        <input type='text' name='description' onChange={handleChange} />
+        <input
+          type='text'
+          name='description'
+          onChange={handleChange}
+          required
+        />
       </label>
       <label htmlFor='cost'>
         Cost:
-        <input type='text' name='cost' onChange={handleChange} />
+        <input type='text' name='cost' onChange={handleChange} required />
       </label>
       <button>save</button>
     </form>
