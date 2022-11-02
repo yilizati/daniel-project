@@ -1,28 +1,35 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function ExpenseForm({ users, saveExpense }) {
-  const [categories, setCategories] = useState(['Food', 'Travel', 'Equipment'])
-  const [description, setDescription] = useState('')
-  const [cost, setCost] = useState('')
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!categories || !description || cost) return
-    const newExpense = { categories, description, cost }
-    saveExpense(newExpense)
-    setDescription('')
-    setCost('')
-  }
+  const initialFormData = Object.freeze({
+    fullName: '',
+    category: '',
+    description: '',
+    cost: '',
+  })
+  const [formData, updateFormData] = React.useState(initialFormData)
 
   const handleChange = (e) => {
     const { name, value } = e.target
+    updateFormData({
+      ...formData,
+      [name]: value.trim(),
+    })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(formData)
+    // ... submit to API or something
+  }
+
+  const categories = ['Food', 'Travel', 'Equipment']
 
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor='users'>
         Users:
-        <select name='users'>
+        <select name='users' onChange={handleChange}>
           <option value='--select'>--select--</option>
           {users.map((user, index) => (
             <option key={index} value={user.fullname}>
@@ -33,7 +40,11 @@ export default function ExpenseForm({ users, saveExpense }) {
       </label>
       <label htmlFor='cateogories-dropdown'>
         Categories:
-        <select name='cateogories' id='categories-dropdown'>
+        <select
+          name='cateogories'
+          id='categories-dropdown'
+          onChange={handleChange}
+        >
           <option value='--select'>--select--</option>
           {categories.map((cat, index) => (
             <option key={index} value={cat}>
@@ -44,11 +55,11 @@ export default function ExpenseForm({ users, saveExpense }) {
       </label>
       <label htmlFor='description'>
         Description:
-        <input type='text' id='description' />
+        <input type='text' id='description' onChange={handleChange} />
       </label>
       <label htmlFor='cost'>
         Cost:
-        <input type='text' id='cost' />
+        <input type='text' id='cost' onChange={handleChange} />
       </label>
       <button>save</button>
     </form>
