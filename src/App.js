@@ -5,7 +5,7 @@ import './App.css'
 
 function App() {
   const userSchema = [
-    { firstName: 'john', lastName: 'doe', totalExpense: '$3013', id: 1 },
+    { firstName: 'john', lastName: 'doe', totalExpense: '3013', id: 1 },
   ]
   const expenseSchema = [
     {
@@ -29,6 +29,8 @@ function App() {
     const updatedUserExpensesList = usersExpenses.filter(
       (user) => user.id !== id
     )
+
+    console.log('-->', updatedUserExpensesList)
     setUsersExpenses(updatedUserExpensesList)
   }
 
@@ -40,6 +42,8 @@ function App() {
     setUsers(editedUsersList)
   }
 
+  console.log(users)
+
   return (
     <div className='App'>
       <UsersTable
@@ -48,12 +52,11 @@ function App() {
         createNewUser={handleCreateNewUser}
         deleteUser={handleDeleteUser}
         editUser={handleEditUser}
-        usersExpenses={usersExpenses}
       />
       <ExpenseTable
         className='expense-table'
         users={users}
-        userExpenses={usersExpenses}
+        usersExpenses={usersExpenses}
       />
     </div>
   )
