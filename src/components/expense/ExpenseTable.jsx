@@ -1,60 +1,19 @@
 import React, { useState } from 'react'
+import Expense from './Expense'
 import ExpenseForm from './ExpenseForm'
 
-export default function ExpenseTable({ users }) {
-  const [isEditing, setIsEditing] = useState(false)
-
-  const tableSchema = Object.freeze({
-    fullName: '',
-    category: '',
-    descrition: '',
-    cost: '',
-  })
-
-  const [tableData, setTableData] = useState([tableSchema])
-
-  const viewTemplate = tableData.map(
-    ({ fullName, category, description, cost }) => (
-      <tr>
-        <td>{fullName}</td>
-        <td>{category}</td>
-        <td>{description}</td>
-        <td>{cost}</td>
-      </tr>
-    )
-  )
-
+export default function ExpenseTable({
+  users,
+  userExpenses,
+  editExpense,
+  deleteExpense,
+}) {
+  const [expenses, setExpenses] = useState(userExpenses)
   const saveExpense = (newExpense) => {
-    console.log(newExpense)
-    setTableData([...tableData, { ...newExpense, id: tableData.length + 1 }])
-    console.log(tableData)
+    console.log('NEW', newExpense)
+    setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }])
+    console.log(expenses)
   }
-
-  // const editTemplate = (
-  //   <tr>
-  //     <td>
-  //       <select name='users'>
-  //         <option value='--select'>--select--</option>
-  //         {users.map((user, index) => (
-  //           <option key={index} value={user.fullname}>
-  //             {user.firstName}
-  //           </option>
-  //         ))}
-  //       </select>
-  //     </td>
-  //     <td></td>
-  //     <td>
-  //       <input type='text' name='description' />
-  //     </td>
-  //     <td>
-  //       <input type='text' name='cost' />
-  //     </td>
-  //     <td>
-  //       <button>edit</button>
-  //       <button>delete</button>
-  //     </td>
-  //   </tr>
-  // )
 
   return (
     <>
@@ -63,13 +22,26 @@ export default function ExpenseTable({ users }) {
         <caption>Expense Table</caption>
         <thead>
           <tr>
-            <th scope='col'>Full Name</th>
-            <th scope='col'>Category</th>
-            <th scope='col'>Description</th>
-            <th scope='col'>Cost</th>
+            <th>Full Name</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Cost</th>
           </tr>
         </thead>
-        {viewTemplate ? <tbody>{viewTemplate}</tbody> : ''}
+        <tbody>
+          {expenses.map((item, index) => (
+            <Expense
+              key={index}
+              fullName={item.fullName}
+              id=''
+              category={item.category}
+              description={item.description}
+              cost={item.cost}
+              editExpense={editExpense}
+              deleteExpense={deleteExpense}
+            />
+          ))}
+        </tbody>
       </table>
     </>
   )
