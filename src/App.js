@@ -29,8 +29,6 @@ function App() {
     const updatedUserExpensesList = usersExpenses.filter(
       (user) => user.id !== id
     )
-
-    console.log('-->', updatedUserExpensesList)
     setUsersExpenses(updatedUserExpensesList)
   }
 
@@ -40,6 +38,13 @@ function App() {
       return user
     })
     setUsers(editedUsersList)
+  }
+
+  const handleCreateNewExpense = (newExpense) => {
+    setUsersExpenses([
+      ...usersExpenses,
+      { ...newExpense, id: usersExpenses.length + 1 },
+    ])
   }
 
   console.log(users)
@@ -57,6 +62,7 @@ function App() {
         className='expense-table'
         users={users}
         usersExpenses={usersExpenses}
+        createNewExpense={handleCreateNewExpense}
       />
     </div>
   )

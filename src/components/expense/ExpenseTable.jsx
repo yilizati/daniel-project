@@ -2,11 +2,16 @@ import React, { useState } from 'react'
 import Expense from './Expense'
 import ExpenseForm from './ExpenseForm'
 
-export default function ExpenseTable({ users }) {
+export default function ExpenseTable({
+  users,
+  usersExpenses,
+  createNewExpense,
+}) {
   const [expenses, setExpenses] = useState([])
 
   const saveExpense = (newExpense) => {
-    setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }])
+    // setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }])
+    createNewExpense(newExpense)
   }
 
   const editExpense = (id, updatedExpense) => {
@@ -37,8 +42,8 @@ export default function ExpenseTable({ users }) {
           </tr>
         </thead>
         <tbody>
-          {expenses &&
-            expenses.map((exp, index) => (
+          {usersExpenses &&
+            usersExpenses.map((exp, index) => (
               <Expense
                 key={index}
                 fullName={exp.fullName}
