@@ -1,10 +1,11 @@
 import ExpenseTable from './components/expense/ExpenseTable'
 import UsersTable from './components/user/UserTable'
 import { useState } from 'react'
+import './App.css'
+
 function App() {
   const usersSchema = [
     { firstName: 'john', lastName: 'doe', totalExpenses: '$3013', id: 1 },
-    { firstName: 'jane', lastName: 'joe', totalExpenses: '$3013', id: 2 },
   ]
 
   const [users, setUsers] = useState(usersSchema)
@@ -28,12 +29,13 @@ function App() {
   return (
     <div className='App'>
       <UsersTable
+        className='users-table'
         users={users}
         createNewUser={handleCreateNewUser}
         deleteUser={handleDeleteUser}
         editUser={handleEditUser}
       />
-      <ExpenseTable users={users} />
+      <ExpenseTable className='expense-table' users={users} />
     </div>
   )
 }

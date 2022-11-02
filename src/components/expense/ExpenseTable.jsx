@@ -4,28 +4,30 @@ import ExpenseForm from './ExpenseForm'
 export default function ExpenseTable({ users }) {
   const [isEditing, setIsEditing] = useState(false)
 
-  const [tableData, setTableData] = useState([
-    {
-      users,
-      categories: ['Food', 'Travel', 'Equipment'],
-      description: '',
-      cost: '',
-    },
-  ])
-  // const viewTemplate = tableData.map(
-  //   ({ firstName, lastName, category, description, cost }) => (
-  //     <tr>
-  //       <td>{`${firstName} ${lastName}`}</td>
-  //       <td>{category}</td>
-  //       <td>{description}</td>
-  //       <td>{cost}</td>
-  //     </tr>
-  //   )
-  // )
+  const tableSchema = Object.freeze({
+    fullName: '',
+    category: '',
+    descrition: '',
+    cost: '',
+  })
 
-  const saveExpense = (formData) => {
-    // setTableData(tableData.push(formData))
-    console.log(formData)
+  const [tableData, setTableData] = useState([tableSchema])
+
+  const viewTemplate = tableData.map(
+    ({ fullName, category, description, cost }) => (
+      <tr>
+        <td>{fullName}</td>
+        <td>{category}</td>
+        <td>{description}</td>
+        <td>{cost}</td>
+      </tr>
+    )
+  )
+
+  const saveExpense = (newExpense) => {
+    console.log(newExpense)
+    setTableData([...tableData, { ...newExpense, id: tableData.length + 1 }])
+    console.log(tableData)
   }
 
   // const editTemplate = (
@@ -57,7 +59,7 @@ export default function ExpenseTable({ users }) {
   return (
     <>
       <ExpenseForm saveExpense={saveExpense} usersDropdownList={users} />
-      {/* <table>
+      <table>
         <caption>Expense Table</caption>
         <thead>
           <tr>
@@ -67,8 +69,8 @@ export default function ExpenseTable({ users }) {
             <th scope='col'>Cost</th>
           </tr>
         </thead>
-        <tbody>{tableData && viewTemplate}</tbody>
-      </table> */}
+        {viewTemplate ? <tbody>{viewTemplate}</tbody> : ''}
+      </table>
     </>
   )
 }

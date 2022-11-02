@@ -31,8 +31,8 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
         Users:
         <select name='fullName' onChange={handleChange} required>
           <option value=''>--select--</option>
-          {usersDropdownList.map((user, index) => (
-            <option key={index} value={`${user.firstName} ${user.lastName}`}>
+          {usersDropdownList.map((user) => (
+            <option key={user.id} value={`${user.firstName} ${user.lastName}`}>
               {`${user.firstName} ${user.lastName}`}
             </option>
           ))}
