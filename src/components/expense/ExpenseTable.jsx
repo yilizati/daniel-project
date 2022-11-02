@@ -2,18 +2,25 @@ import React, { useState } from 'react'
 import Expense from './Expense'
 import ExpenseForm from './ExpenseForm'
 
-export default function ExpenseTable({
-  users,
-  userExpenses,
-  editExpense,
-  deleteExpense,
-}) {
-  const [expenses, setExpenses] = useState(userExpenses)
+export default function ExpenseTable({ users, usersExpenses }) {
+  const [expenses, setExpenses] = useState([])
 
   const saveExpense = (newExpense) => {
-    console.log('NEW', newExpense)
     setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }])
-    console.log(expenses)
+  }
+
+  const editExpense = (id, updatedExpense) => {
+    const updatedExpensesList = expenses.map((exp) => {
+      if (id === exp.id) return { ...updatedExpense }
+      return updatedExpense
+    })
+    setExpenses(updatedExpensesList)
+  }
+
+  const deleteExpense = (id) => {
+    console.log('ID ->', id)
+    const updatedExpensesList = expenses.filter((exp) => id !== exp.id)
+    setExpenses(updatedExpensesList)
   }
 
   return (
@@ -31,19 +38,20 @@ export default function ExpenseTable({
           </tr>
         </thead>
         <tbody>
-          {expenses.map((item, index) => (
-            <Expense
-              key={index}
-              fullName={item.fullName}
-              id=''
-              category={item.category}
-              description={item.description}
-              cost={item.cost}
-              editExpense={editExpense}
-              deleteExpense={deleteExpense}
-              usersDropdownList={users}
-            />
-          ))}
+          {expenses &&
+            expenses.map((item, index) => (
+              <Expense
+                key={index}
+                fullName={item.fullName}
+                id={item.id}
+                category={item.category}
+                description={item.description}
+                cost={item.cost}
+                editExpense={editExpense}
+                deleteExpense={deleteExpense}
+                usersDropdownList={users}
+              />
+            ))}
         </tbody>
       </table>
     </>

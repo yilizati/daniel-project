@@ -9,7 +9,7 @@ function App() {
   ]
 
   const [users, setUsers] = useState(usersSchema)
-  const [userExpenses, setUserExpenses] = useState([])
+  const [usersExpenses, setUsersExpenses] = useState([])
 
   const handleCreateNewUser = (newUser) => {
     setUsers([...users, { ...newUser, id: users.length + 1 }])
@@ -27,7 +27,9 @@ function App() {
     setUsers(editedUsersList)
   }
 
-  const handleEditExpense = () => {}
+  const handleEditExpense = (id) => {
+    console.log('id --->', id)
+  }
   const handleDeleteExpense = () => {}
 
   return (
@@ -38,11 +40,12 @@ function App() {
         createNewUser={handleCreateNewUser}
         deleteUser={handleDeleteUser}
         editUser={handleEditUser}
+        usersExpenses={usersExpenses}
       />
       <ExpenseTable
         className='expense-table'
         users={users}
-        userExpenses={userExpenses}
+        userExpenses={usersExpenses}
         editExpense={handleEditExpense}
         deleteExpense={handleDeleteExpense}
       />

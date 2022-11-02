@@ -6,9 +6,9 @@ export default function Expense({
   description,
   cost,
   id,
-  editUser,
-  deleteUser,
   usersDropdownList,
+  editExpense,
+  deleteExpense,
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [updatedExpense, setUpdatedExpense] = useState({
@@ -19,7 +19,6 @@ export default function Expense({
   })
 
   const categoriesList = ['Food', 'Travel', 'Equipment']
-  //.filter(cat => cat !== category)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -29,40 +28,77 @@ export default function Expense({
     })
   }
 
+  const handleSave = () => {
+    setIsEditing(false)
+    console.log(Object.values(updatedExpense))
+    if (Object.values(updatedExpense).some((e) => e.length === 0))
+      return alert('all fields must be filled out.')
+    editExpense(id, updatedExpense)
+  }
+
+  const handleDelete = () => {
+    setIsEditing(false)
+    deleteExpense(id)
+  }
+
   const edittingTemplate = (
     <tr>
       <td>
-        <select name='fullName' onChange={handleChange} required>
-          <option value=''>--select--</option>
-          {usersDropdownList.map((user) => (
-            <option key={user.id} value={`${user.firstName} ${user.lastName}`}>
-              {`${user.firstName} ${user.lastName}`}
-            </option>
-          ))}
+        <select name='fullName' onChange={handleChange}>
+          {usersDropdownList.map((user) => {
+            return user.id === id ? (
+              <option
+                key={user.id}
+                value={`${user.firstName} ${user.lastName}`}
+                selected
+              >
+                {`${user.firstName} ${user.lastName}`}
+              </option>
+            ) : (
+              <option
+                key={user.id}
+                value={`${user.firstName} ${user.lastName}`}
+              >
+                {`${user.firstName} ${user.lastName}`}
+              </option>
+            )
+          })}
         </select>
       </td>
       <td>
-        <select name='category' onChange={handleChange} required>
+        <select name='category' onChange={handleChange}>
           {categoriesList.map((cat, index) =>
             cat === category ? (
-              <option value={category} selected>
+              <option key={index} selected>
                 {category}
               </option>
             ) : (
-              <option value={cat}>{cat}</option>
+              <option value={cat} key={index}>
+                {cat}
+              </option>
             )
           )}
         </select>
       </td>
       <td>
-        <input type='text' name='description' />
+        <input
+          type='text'
+          name='description'
+          value={updatedExpense.description}
+          onChange={handleChange}
+        />
       </td>
       <td>
-        <input type='text' name='cost' />
+        <input
+          type='text'
+          name='cost'
+          value={updatedExpense.cost}
+          onChange={handleChange}
+        />
       </td>
       <td>
-        <button>edit</button>
-        <button>delete</button>
+        <button onClick={handleSave}>save</button>
+        <button onClick={handleDelete}>delete</button>
       </td>
     </tr>
   )
@@ -75,7 +111,7 @@ export default function Expense({
       <td>{cost}</td>
       <td>
         <button onClick={() => setIsEditing(true)}>edit</button>
-        <button>delete</button>
+        <button onClick={handleDelete}>delete</button>
       </td>
     </tr>
   )

@@ -23,7 +23,6 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
     e.preventDefault()
     if (Object.values(formData).every((e) => e.length !== 0))
       saveExpense(formData)
-    console.log('saved', formData)
   }
 
   return (
