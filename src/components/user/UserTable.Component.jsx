@@ -25,7 +25,6 @@ export default function UserTableComponent() {
   }
 
   const deleteUser = (id) => {
-    console.log(id)
     setUsers((currentUsers) => currentUsers.filter((user) => user.id !== id))
   }
 

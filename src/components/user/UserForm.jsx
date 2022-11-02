@@ -6,8 +6,8 @@ export default function UserForm({ saveUser }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const newUser = { firstName, lastName }
     if (!firstName || !lastName) return
+    const newUser = { firstName, lastName }
     saveUser(newUser)
     setFirstName('')
     setLastName('')
