@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 export default function User({
   firstName,
   lastName,
+  totalExpense,
   id,
   editUser,
   deleteUser,
@@ -49,7 +50,7 @@ export default function User({
           onChange={handleChange}
         />
       </td>
-      <td>$1023I</td>
+      <td>${totalExpense}</td>
       <td>
         <button onClick={handleSave}>save</button>
       </td>
@@ -60,7 +61,7 @@ export default function User({
     <tr>
       <td>{firstName}</td>
       <td>{lastName}</td>
-      <td>$1023I</td>
+      <td>{totalExpense}</td>
       <td>
         <button onClick={handleEditUser}>edit</button>
         <button onClick={handleDelete}>delete</button>

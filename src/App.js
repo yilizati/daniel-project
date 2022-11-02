@@ -4,12 +4,21 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const usersSchema = [
-    { firstName: 'john', lastName: 'doe', totalExpenses: '$3013', id: 1 },
+  const userSchema = [
+    { firstName: 'john', lastName: 'doe', totalExpense: '$3013', id: 1 },
+  ]
+  const expenseSchema = [
+    {
+      user: userSchema,
+      category: 'Travel',
+      description: 'some description',
+      cost: '$300',
+      id: 1,
+    },
   ]
 
-  const [users, setUsers] = useState(usersSchema)
-  const [usersExpenses, setUsersExpenses] = useState([])
+  const [users, setUsers] = useState(userSchema)
+  const [usersExpenses, setUsersExpenses] = useState(expenseSchema)
 
   const handleCreateNewUser = (newUser) => {
     setUsers([...users, { ...newUser, id: users.length + 1 }])
@@ -17,6 +26,10 @@ function App() {
 
   const handleDeleteUser = (id) => {
     setUsers((currentUsers) => currentUsers.filter((user) => user.id !== id))
+    const updatedUserExpensesList = usersExpenses.filter(
+      (user) => user.id !== id
+    )
+    setUsersExpenses(updatedUserExpensesList)
   }
 
   const handleEditUser = (id, newUser) => {
@@ -26,11 +39,6 @@ function App() {
     })
     setUsers(editedUsersList)
   }
-
-  const handleEditExpense = (id) => {
-    console.log('id --->', id)
-  }
-  const handleDeleteExpense = () => {}
 
   return (
     <div className='App'>
@@ -46,8 +54,6 @@ function App() {
         className='expense-table'
         users={users}
         userExpenses={usersExpenses}
-        editExpense={handleEditExpense}
-        deleteExpense={handleDeleteExpense}
       />
     </div>
   )

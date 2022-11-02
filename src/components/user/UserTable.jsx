@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './UserTable.Style.css'
 import UserForm from './UserForm'
 import User from './User'
@@ -23,7 +23,7 @@ export default function UsersTable({
           </tr>
         </thead>
         <tbody>
-          {users.map(({ firstName, lastName, id }) => (
+          {users.map(({ firstName, lastName, totalExpense, id }) => (
             <User
               firstName={firstName}
               lastName={lastName}
@@ -31,6 +31,7 @@ export default function UsersTable({
               id={id}
               editUser={editUser}
               deleteUser={deleteUser}
+              totalExpense={totalExpense}
             />
           ))}
         </tbody>

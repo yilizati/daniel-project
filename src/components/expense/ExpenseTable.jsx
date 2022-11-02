@@ -18,7 +18,6 @@ export default function ExpenseTable({ users, usersExpenses }) {
   }
 
   const deleteExpense = (id) => {
-    console.log('ID ->', id)
     const updatedExpensesList = expenses.filter((exp) => id !== exp.id)
     setExpenses(updatedExpensesList)
   }
@@ -38,15 +37,15 @@ export default function ExpenseTable({ users, usersExpenses }) {
           </tr>
         </thead>
         <tbody>
-          {expenses &&
-            expenses.map((item, index) => (
+          {usersExpenses &&
+            usersExpenses.map((exp, index) => (
               <Expense
                 key={index}
-                fullName={item.fullName}
-                id={item.id}
-                category={item.category}
-                description={item.description}
-                cost={item.cost}
+                fullName={`${exp.user.firstName} ${exp.user.lastName}`}
+                id={exp.id}
+                category={exp.category}
+                description={exp.description}
+                cost={exp.cost}
                 editExpense={editExpense}
                 deleteExpense={deleteExpense}
                 usersDropdownList={users}
