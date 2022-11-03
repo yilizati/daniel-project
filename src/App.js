@@ -5,14 +5,14 @@ import './App.css'
 
 function App() {
   const userSchema = [
-    { firstName: 'john', lastName: 'doe', totalExpense: '$300', id: 1 },
+    { firstName: 'john', lastName: 'doe', totalExpense: '900', id: 1 },
   ]
   const expenseSchema = [
     {
-      user: userSchema[0],
+      fullName: 'john doe',
       category: 'Travel',
       description: 'some description',
-      cost: '$300',
+      cost: '300',
       id: 1,
     },
   ]
@@ -41,12 +41,20 @@ function App() {
   }
 
   const handleCreateNewExpense = (newExpense) => {
+    console.log('newExpense', newExpense)
+    const { userId: id } = newExpense
+    const theUser = users.find((user) => user.id === id)
     setUsersExpenses([
       ...usersExpenses,
-      { ...newExpense, id: usersExpenses.length + 1 },
+      {
+        ...newExpense,
+        totalExpense: newExpense.cost,
+        user: theUser,
+        id: usersExpenses.length + 1,
+      },
     ])
-    const theUser = users.find((user) => user.id)
-    console.log(newExpense)
+
+    console.log(usersExpenses)
   }
 
   const handleDeleteExpense = (id) => {
@@ -59,6 +67,7 @@ function App() {
       if (id === exp.id) return { ...updatedExpense }
       return updatedExpense
     })
+    setUsersExpenses(updatedExpensesList)
   }
 
   return (

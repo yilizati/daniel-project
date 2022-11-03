@@ -9,7 +9,12 @@ export default function User({
   deleteUser,
 }) {
   const [isEditing, setIsEditing] = useState(false)
-  const [newUser, setNewUser] = useState({ firstName, lastName, id })
+  const [newUser, setNewUser] = useState({
+    firstName,
+    lastName,
+    totalExpense,
+    id,
+  })
 
   const handleEditUser = () => {
     setIsEditing(true)
@@ -50,7 +55,7 @@ export default function User({
           onChange={handleChange}
         />
       </td>
-      <td>${totalExpense}</td>
+      <td>{`$${totalExpense}`}</td>
       <td>
         <button onClick={handleSave}>save</button>
       </td>
@@ -61,7 +66,7 @@ export default function User({
     <tr>
       <td>{firstName}</td>
       <td>{lastName}</td>
-      <td>{totalExpense}</td>
+      <td>{`$${totalExpense}`}</td>
       <td>
         <button onClick={handleEditUser}>edit</button>
         <button onClick={handleDelete}>delete</button>

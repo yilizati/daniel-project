@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Expense({
-  user,
+  fullName,
   category,
   description,
   cost,
@@ -12,7 +12,7 @@ export default function Expense({
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [updatedExpense, setUpdatedExpense] = useState({
-    user,
+    fullName,
     category,
     description,
     cost,
@@ -39,6 +39,8 @@ export default function Expense({
     setIsEditing(false)
     deleteExpense(id)
   }
+
+  console.log(usersDropdownList)
 
   const edittingTemplate = (
     <tr>
@@ -104,10 +106,10 @@ export default function Expense({
 
   const viewTemplate = (
     <tr>
-      <td>{`${user.firstName} ${user.lastName}`}</td>
+      <td>{fullName}</td>
       <td>{category}</td>
       <td>{description}</td>
-      <td>{cost}</td>
+      <td>{`$${cost}`}</td>
       <td>
         <button onClick={() => setIsEditing(true)}>edit</button>
         <button onClick={handleDelete}>delete</button>

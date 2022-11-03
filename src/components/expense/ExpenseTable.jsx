@@ -28,7 +28,7 @@ export default function ExpenseTable({
             usersExpenses.map((expense, index) => (
               <Expense
                 key={index}
-                user={expense.user}
+                fullName={expense.fullName}
                 id={expense.id}
                 category={expense.category}
                 description={expense.description}

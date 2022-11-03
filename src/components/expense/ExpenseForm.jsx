@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 export default function ExpenseForm({ usersDropdownList, saveExpense }) {
-  const [formData, updateFormData] = useState([])
+  const [formData, updateFormData] = useState({})
 
   const categories = ['Food', 'Travel', 'Equipment']
+  const userId = useRef()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -15,24 +16,29 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (Object.values(formData).every((e) => e.length !== 0))
-      saveExpense(formData)
+    if (Object.values(formData).some((e) => e.length === 0)) return
+    saveExpense({ ...formData, userId: parseInt(userId.current.id) })
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor='users'>
+      <label>
         Users:
         <select name='fullName' onChange={handleChange} required>
           <option value=''>--select--</option>
           {usersDropdownList.map((user) => (
-            <option key={user.id} value={`${user.firstName} ${user.lastName}`}>
+            <option
+              key={user.id}
+              id={user.id}
+              value={`${user.firstName} ${user.lastName}`}
+              ref={userId}
+            >
               {`${user.firstName} ${user.lastName}`}
             </option>
           ))}
         </select>
       </label>
-      <label htmlFor='cateogories-dropdown'>
+      <label>
         Categories:
         <select name='category' onChange={handleChange} required>
           <option value=''>--select--</option>
@@ -43,7 +49,7 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
           ))}
         </select>
       </label>
-      <label htmlFor='description'>
+      <label>
         Description:
         <input
           type='text'
@@ -52,7 +58,7 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
           required
         />
       </label>
-      <label htmlFor='cost'>
+      <label>
         Cost:
         <input type='text' name='cost' onChange={handleChange} required />
       </label>
