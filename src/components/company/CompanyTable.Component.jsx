@@ -1,6 +1,14 @@
 import React from 'react'
 
-export default function CompanyTable({ categoryAndTotal }) {
+export default function CompanyTable({ usersExpenses }) {
+  const map = new Map()
+  for (let exp of usersExpenses) {
+    if (map.has(exp.category)) {
+      map.set(exp.category, map.get(exp.cost) + exp.cost)
+    } else {
+      map.set(exp.category, exp.cost)
+    }
+  }
   return (
     <table>
       <caption>Expense Table</caption>
@@ -10,7 +18,16 @@ export default function CompanyTable({ categoryAndTotal }) {
           <th>Total</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {[...map.keys()].map((category, index) => {
+          return (
+            <tr key={index}>
+              <td>{category}</td>
+              <td>{category.cost}</td>
+            </tr>
+          )
+        })}
+      </tbody>
     </table>
   )
 }

@@ -1,39 +1,16 @@
 import ExpenseTable from './components/expense/ExpenseTable'
 import UsersTable from './components/user/UserTable'
 import CompanyTable from './components/company/CompanyTable.Component'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const userSchema = [
+  const sampleData = [
     { firstName: 'john', lastName: 'doe', totalExpense: '300', id: 1 },
   ]
-  // const expenseSchema = [
-  //   {
-  //     fullName: 'john doe',
-  //     category: 'Travel',
-  //     description: 'some description',
-  //     cost: '300',
-  //     id: 1,
-  //   },
-  // ]
 
-  const [users, setUsers] = useState(userSchema)
+  const [users, setUsers] = useState(sampleData)
   const [usersExpenses, setUsersExpenses] = useState([])
-  const categoryAndTotal = useRef()
-
-  console.log(categoryAndTotal)
-  console.log(usersExpenses)
-
-  useEffect(() => {
-    for (let exp of usersExpenses) {
-      if (categoryAndTotal[exp.category]) {
-        categoryAndTotal[exp.category] += exp.cost
-      } else {
-        categoryAndTotal[exp.category] = 0
-      }
-    }
-  }, [usersExpenses])
 
   const handleCreateNewUser = (newUser) => {
     setUsers([...users, { ...newUser, id: users.length + 1 }])
@@ -57,13 +34,10 @@ function App() {
 
   const handleCreateNewExpense = (newExpense) => {
     const { userId: id } = newExpense
-    const theUser = users.find((user) => user.id === id)
     setUsersExpenses([
       ...usersExpenses,
       {
         ...newExpense,
-        totalExpense: newExpense.cost,
-        user: theUser,
         id: usersExpenses.length + 1,
       },
     ])
@@ -104,7 +78,7 @@ function App() {
         deleteExpense={handleDeleteExpense}
         editExpense={handleEditExpense}
       />
-      <CompanyTable categoryAndTotal={categoryAndTotal} />
+      <CompanyTable usersExpenses={usersExpenses} />
     </div>
   )
 }
