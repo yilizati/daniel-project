@@ -1,24 +1,39 @@
 import ExpenseTable from './components/expense/ExpenseTable'
 import UsersTable from './components/user/UserTable'
-import { useState } from 'react'
+import CompanyTable from './components/company/CompanyTable.Component'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
   const userSchema = [
-    { firstName: 'john', lastName: 'doe', totalExpense: '900', id: 1 },
+    { firstName: 'john', lastName: 'doe', totalExpense: '300', id: 1 },
   ]
-  const expenseSchema = [
-    {
-      fullName: 'john doe',
-      category: 'Travel',
-      description: 'some description',
-      cost: '300',
-      id: 1,
-    },
-  ]
+  // const expenseSchema = [
+  //   {
+  //     fullName: 'john doe',
+  //     category: 'Travel',
+  //     description: 'some description',
+  //     cost: '300',
+  //     id: 1,
+  //   },
+  // ]
 
   const [users, setUsers] = useState(userSchema)
-  const [usersExpenses, setUsersExpenses] = useState(expenseSchema)
+  const [usersExpenses, setUsersExpenses] = useState([])
+  const categoryAndTotal = useRef()
+
+  console.log(categoryAndTotal)
+  console.log(usersExpenses)
+
+  useEffect(() => {
+    for (let exp of usersExpenses) {
+      if (categoryAndTotal[exp.category]) {
+        categoryAndTotal[exp.category] += exp.cost
+      } else {
+        categoryAndTotal[exp.category] = 0
+      }
+    }
+  }, [usersExpenses])
 
   const handleCreateNewUser = (newUser) => {
     setUsers([...users, { ...newUser, id: users.length + 1 }])
@@ -52,11 +67,11 @@ function App() {
         id: usersExpenses.length + 1,
       },
     ])
-    const editedUsersList = users.map((user) => {
+    const updatedUsersList = users.map((user) => {
       if (id === user.id) return { ...user, totalExpense: newExpense.cost }
       return user
     })
-    setUsers(editedUsersList)
+    setUsers(updatedUsersList)
   }
 
   const handleDeleteExpense = (id) => {
@@ -89,6 +104,7 @@ function App() {
         deleteExpense={handleDeleteExpense}
         editExpense={handleEditExpense}
       />
+      <CompanyTable categoryAndTotal={categoryAndTotal} />
     </div>
   )
 }

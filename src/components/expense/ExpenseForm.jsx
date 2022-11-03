@@ -1,7 +1,14 @@
 import React, { useState, useRef } from 'react'
 
 export default function ExpenseForm({ usersDropdownList, saveExpense }) {
-  const [formData, setFormData] = useState({})
+  const intialFormState = {
+    fullName: '--select--',
+    category: '--select--',
+    description: '',
+    cost: '',
+  }
+
+  const [formData, setFormData] = useState(intialFormState)
 
   const categories = ['Food', 'Travel', 'Equipment']
   const userId = useRef()
@@ -18,14 +25,20 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
     e.preventDefault()
     if (Object.values(formData).some((e) => e.length === 0)) return
     saveExpense({ ...formData, userId: parseInt(userId.current.id) })
+    setFormData(intialFormState)
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
         Users:
-        <select name='fullName' onChange={handleChange} required>
-          <option value=''>--select--</option>
+        <select
+          name='fullName'
+          onChange={handleChange}
+          value={formData.fullName}
+          required
+        >
+          <option>{formData.fullName}</option>
           {usersDropdownList.map((user) => (
             <option
               key={user.id}
@@ -40,8 +53,13 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
       </label>
       <label>
         Categories:
-        <select name='category' onChange={handleChange} required>
-          <option value=''>--select--</option>
+        <select
+          name='category'
+          onChange={handleChange}
+          value={formData.category}
+          required
+        >
+          <option>{formData.category}</option>
           {categories.map((cat, index) => (
             <option key={index} value={cat}>
               {cat}
@@ -55,12 +73,19 @@ export default function ExpenseForm({ usersDropdownList, saveExpense }) {
           type='text'
           name='description'
           onChange={handleChange}
+          value={formData.description}
           required
         />
       </label>
       <label>
         Cost:
-        <input type='text' name='cost' onChange={handleChange} required />
+        <input
+          type='text'
+          name='cost'
+          onChange={handleChange}
+          value={formData.cost}
+          required
+        />
       </label>
       <button>save</button>
     </form>

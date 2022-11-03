@@ -1,7 +1,8 @@
-.users-table {
-  margin: 30px;
+body {
+  background-color: antiquewhite;
 }
 
-.expense-table {
-  margin: 30px;
+.App {
+  display: flex;
+  flex-flow: column;
 }
