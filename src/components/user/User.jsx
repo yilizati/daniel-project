@@ -66,7 +66,7 @@ export default function User({
     <tr>
       <td>{firstName}</td>
       <td>{lastName}</td>
-      <td>{`$${totalExpense}`}</td>
+      <td>{totalExpense ? `$${totalExpense}` : ''}</td>
       <td>
         <button onClick={handleEditUser}>edit</button>
         <button onClick={handleDelete}>delete</button>

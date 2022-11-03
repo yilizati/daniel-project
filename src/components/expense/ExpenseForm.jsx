@@ -1,14 +1,14 @@
 import React, { useState, useRef } from 'react'
 
 export default function ExpenseForm({ usersDropdownList, saveExpense }) {
-  const [formData, updateFormData] = useState({})
+  const [formData, setFormData] = useState({})
 
   const categories = ['Food', 'Travel', 'Equipment']
   const userId = useRef()
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    updateFormData({
+    setFormData({
       ...formData,
       [name]: value.trim(),
     })

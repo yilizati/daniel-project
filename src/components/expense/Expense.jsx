@@ -40,8 +40,6 @@ export default function Expense({
     deleteExpense(id)
   }
 
-  console.log(usersDropdownList)
-
   const edittingTemplate = (
     <tr>
       <td>

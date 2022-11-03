@@ -4,6 +4,7 @@ export default function UserForm({ saveUser }) {
   const initialFormData = Object.freeze({
     firstName: '',
     lastName: '',
+    totalExpenses: '',
   })
 
   const [form, setForm] = useState(initialFormData)
@@ -26,7 +27,7 @@ export default function UserForm({ saveUser }) {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor='firstname'>
-        Last name:
+        First name:
         <input
           type='text'
           name='firstName'
@@ -36,7 +37,7 @@ export default function UserForm({ saveUser }) {
         />
       </label>
       <label htmlFor='lastname'>
-        First name:
+        Last name:
         <input
           type='text'
           name='lastName'

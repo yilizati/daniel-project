@@ -41,7 +41,6 @@ function App() {
   }
 
   const handleCreateNewExpense = (newExpense) => {
-    console.log('newExpense', newExpense)
     const { userId: id } = newExpense
     const theUser = users.find((user) => user.id === id)
     setUsersExpenses([
@@ -53,8 +52,11 @@ function App() {
         id: usersExpenses.length + 1,
       },
     ])
-
-    console.log(usersExpenses)
+    const editedUsersList = users.map((user) => {
+      if (id === user.id) return { ...user, totalExpense: newExpense.cost }
+      return user
+    })
+    setUsers(editedUsersList)
   }
 
   const handleDeleteExpense = (id) => {
